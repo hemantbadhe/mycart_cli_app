@@ -1,0 +1,8 @@
+MYSQL_DB_NAME = "my_cart_app_db"
+MYSQL_USER = "hemant"
+MYSQL_PASSWORD = "Hemant@123"
+MYSQL_HOST = "localhost"
+MYSQL_PORT = "3306"
+
+MAX_AMT_TO_DISCOUNT = 10000.00
+DISCOUNT_AMT = 500.00
