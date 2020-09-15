@@ -2,7 +2,7 @@
 
 >Steps to run the app
 
-1. Clone the latest code
+1. Clone the latest code and checkout to ```develop``` branch.
 2. Create a virtualenv using ```virtualenv -p python3 <venv_name>```
 3. Activate the venv using, ```source <venv_name>/bin/activate```
 4. Install the requiremets using, ```pip install -r requirements.txt```
