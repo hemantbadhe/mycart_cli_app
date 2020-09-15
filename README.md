@@ -2,11 +2,14 @@
 
 >Steps to run the app
 
+>Note: For this assignment, I am gonna use the ```MySQL``` RDBMS.
+
 1. Clone the latest code and checkout to ```develop``` branch.
 2. Create a virtualenv using ```virtualenv -p python3 <venv_name>```
 3. Activate the venv using, ```source <venv_name>/bin/activate```
 4. Install the requiremets using, ```pip install -r requirements.txt```
 5. Install the current codebase using, ```python setup.py develop```
+6. Do the necessary changes like database user & password in ```my_cart_app/app_config.py```
 
 > App(Flow-1)
 1. to run the app(customer app), navigate to ```mycart_cli_app/my_cart_app/app```
