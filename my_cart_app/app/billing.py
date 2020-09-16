@@ -5,7 +5,8 @@ from my_cart_app import *
 
 class BillingManager:
     def __init__(self):
-        self.db_manager = BillingDBManager()
+        self.cursor = db_connection.cursor()
+        self.db_manager = BillingDBManager(self.cursor)
 
     def create_bill(self):
         username = str(input("Enter name: "))
@@ -24,8 +25,8 @@ class BillingUtil:
 
 
 class BillingDBManager:
-    def __init__(self):
-        self._cursor = db_connection.cursor()
+    def __init__(self, cursor):
+        self._cursor = cursor
         self._util = BillingUtil
 
     def create_bill(self, username):
@@ -60,4 +61,3 @@ class BillingDBManager:
         return all_bills
 
 # show status where `variable_name` = 'Threads_connected';
-

@@ -3,7 +3,8 @@ from my_cart_app import db_connection
 
 class CategoryManager:
     def __init__(self):
-        self.db_manager = CategoryDBManager()
+        self.cursor = db_connection.cursor()
+        self.db_manager = CategoryDBManager(self.cursor)
 
     def get_product_categories(self):
         return self.db_manager.get_product_categories()
@@ -26,8 +27,8 @@ class CategoryUtil:
 
 
 class CategoryDBManager:
-    def __init__(self):
-        self._cursor = db_connection.cursor()
+    def __init__(self, cursor):
+        self._cursor = cursor
         self._util = CategoryUtil
 
     def get_product_categories(self):

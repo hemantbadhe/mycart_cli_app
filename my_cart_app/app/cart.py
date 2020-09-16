@@ -4,7 +4,8 @@ from my_cart_app.app.product import ProductDBManager
 
 class CartManager:
     def __init__(self):
-        self.db_manager = CartDBManager()
+        self.cursor = db_connection.cursor()
+        self.db_manager = CartDBManager(self.cursor)
 
     def get_product_from_cart(self):
         return self.db_manager.get_cart_product_from_db()
@@ -29,8 +30,8 @@ class CartUtil:
 
 
 class CartDBManager:
-    def __init__(self):
-        self._cursor = db_connection.cursor()
+    def __init__(self, cursor):
+        self._cursor = cursor
         self._util = CartUtil
 
     def get_cart_product_from_db(self):

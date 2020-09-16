@@ -4,7 +4,8 @@ from my_cart_app.app.categories import CategoryManager
 
 class ProductManager:
     def __init__(self):
-        self.db_manager = ProductDBManager()
+        self.cursor = db_connection.cursor()
+        self.db_manager = ProductDBManager(self.cursor)
 
     def get_product_id_and_return_product_detail(self):
         product_id = int(input('Enter product id: '))
@@ -53,8 +54,8 @@ class ProductUtil:
 
 
 class ProductDBManager:
-    def __init__(self):
-        self._cursor = db_connection.cursor()
+    def __init__(self, cursor):
+        self._cursor = cursor
         self._util = ProductUtil
 
     def get_product(self, product_id):
@@ -85,4 +86,3 @@ class ProductDBManager:
         self._cursor.execute(query)
         db_connection.commit()
         return "New product added successfully."
-
