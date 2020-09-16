@@ -54,35 +54,35 @@ class ProductUtil:
 
 class ProductDBManager:
     def __init__(self):
-        self.__cursor = db_connection.cursor()
-        self.__util = ProductUtil
+        self._cursor = db_connection.cursor()
+        self._util = ProductUtil
 
     def get_product(self, product_id):
         query = f"select * from products where id={product_id};"
-        self.__cursor.execute(query)
-        products = self.__util.get_product_details_from_cursor(self.__cursor)
+        self._cursor.execute(query)
+        products = self._util.get_product_details_from_cursor(self._cursor)
         if products:
             return products[0]
 
     def get_product_by_name(self, product_name):
         query = f"select id from products where productName={product_name};"
-        self.__cursor.execute(query)
-        products = self.__util.get_product_details_from_cursor(self.__cursor)
+        self._cursor.execute(query)
+        products = self._util.get_product_details_from_cursor(self._cursor)
         if products:
             return products
         return None
 
     def get_products_for_category(self, category_id):
         query = f"select id, productName, price from products where category={category_id};"
-        self.__cursor.execute(query)
-        return self.__util.get_product_details_from_cursor(self.__cursor)
+        self._cursor.execute(query)
+        return self._util.get_product_details_from_cursor(self._cursor)
 
     def add_new_product(self, product_category_id, product_name, product_price, product_description):
         query = f"INSERT INTO products (productName, price, description, category) " \
                 f"VALUES ({str(product_name)}, {float(product_price)}, '{dict(product_description)}'," \
                 f" {int(product_category_id)});"
 
-        self.__cursor.execute(query)
+        self._cursor.execute(query)
         db_connection.commit()
         return "New product added successfully."
 

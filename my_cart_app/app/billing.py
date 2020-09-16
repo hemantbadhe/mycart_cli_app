@@ -25,14 +25,14 @@ class BillingUtil:
 
 class BillingDBManager:
     def __init__(self):
-        self.__cursor = db_connection.cursor()
-        self.__util = BillingUtil
+        self._cursor = db_connection.cursor()
+        self._util = BillingUtil
 
     def create_bill(self, username):
         query = f"SELECT p.id, p.productName, p.price FROM products p inner join cart c on p.id = c.productId;"
-        self.__cursor.execute(query)
+        self._cursor.execute(query)
 
-        products = self.__util.get_cart_added_products_for_billing(self.__cursor)
+        products = self._util.get_cart_added_products_for_billing(self._cursor)
 
         if products:
             cart_amount = sum(item['price'] for item in products)
@@ -44,17 +44,17 @@ class BillingDBManager:
 
             insert_query = f"INSERT INTO billing (username, particulars, actual_amount, discount_amount, final_amount)" \
                            f" VALUES ('{username}', '{json.dumps(products)}', {cart_amount}, {discount}, {final_amount});"
-            self.__cursor.execute(insert_query)
-            self.__cursor.execute("delete from cart;")
+            self._cursor.execute(insert_query)
+            self._cursor.execute("delete from cart;")
             db_connection.commit()
             return f"Bill generated successfully."
         return None
 
     def get_all_bills(self):
         query = f"SELECT * from billing;"
-        self.__cursor.execute(query)
+        self._cursor.execute(query)
 
-        all_bills = self.__util.get_cart_added_products_for_billing(self.__cursor)
+        all_bills = self._util.get_cart_added_products_for_billing(self._cursor)
         if not all_bills:
             return None
         return all_bills

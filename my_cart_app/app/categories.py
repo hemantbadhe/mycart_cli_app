@@ -27,13 +27,13 @@ class CategoryUtil:
 
 class CategoryDBManager:
     def __init__(self):
-        self.__cursor = db_connection.cursor()
-        self.__util = CategoryUtil
+        self._cursor = db_connection.cursor()
+        self._util = CategoryUtil
 
     def get_product_categories(self):
         query = f"SELECT * FROM categories;"
-        self.__cursor.execute(query)
-        categories = self.__util.get_product_categories_from_cursor(self.__cursor)
+        self._cursor.execute(query)
+        categories = self._util.get_product_categories_from_cursor(self._cursor)
         db_connection.commit()
         if categories:
             return categories
@@ -41,8 +41,8 @@ class CategoryDBManager:
 
     def get_product_category_by_id(self, category_id):
         query = f"SELECT id FROM categories where id={category_id};"
-        self.__cursor.execute(query)
-        categories = self.__util.get_product_categories_from_cursor(self.__cursor)
+        self._cursor.execute(query)
+        categories = self._util.get_product_categories_from_cursor(self._cursor)
         if categories:
             return categories
         return None
@@ -51,10 +51,10 @@ class CategoryDBManager:
         insert_query = f"INSERT INTO categories (categoryName)SELECT * FROM (SELECT '{category_name}') AS tmp " \
                        f"WHERE NOT EXISTS (SELECT categoryName FROM categories WHERE categoryName = '{category_name}')" \
                        f" LIMIT 1;"
-        self.__cursor.execute(insert_query)
+        self._cursor.execute(insert_query)
         db_connection.commit()
 
-        if self.__cursor.rowcount == 0:
+        if self._cursor.rowcount == 0:
             return "Product categories already exists."
 
         return "Product categories added successfully."

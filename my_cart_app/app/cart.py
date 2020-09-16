@@ -30,13 +30,13 @@ class CartUtil:
 
 class CartDBManager:
     def __init__(self):
-        self.__cursor = db_connection.cursor()
-        self.__util = CartUtil
+        self._cursor = db_connection.cursor()
+        self._util = CartUtil
 
     def get_cart_product_from_db(self):
         query = f"SELECT p.id, p.productName, p.price FROM products p inner join cart c on p.id = c.productId;"
-        self.__cursor.execute(query)
-        product_list = self.__util.get_cart_product_from_cursor(self.__cursor)
+        self._cursor.execute(query)
+        product_list = self._util.get_cart_product_from_cursor(self._cursor)
         if product_list:
             return product_list
         return None
@@ -48,13 +48,13 @@ class CartDBManager:
 
         query = f"INSERT INTO cart (productId) SELECT {str(product_id)} WHERE NOT EXISTS (SELECT productId FROM " \
                 f"cart WHERE productId={product_id}); "
-        self.__cursor.execute(query)
+        self._cursor.execute(query)
         db_connection.commit()
         return f"Product added in cart."
 
     def remove_product_from_cart(self, product_id):
         query = f"delete from cart where productId={product_id}"
-        self.__cursor.execute(query)
+        self._cursor.execute(query)
         db_connection.commit()
         return f"Product removed from cart."
 
