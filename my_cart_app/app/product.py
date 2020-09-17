@@ -54,14 +54,15 @@ class ProductUtil:
 
 
 class ProductDBManager:
-    def __init__(self, cursor):
-        self._cursor = cursor
+    def __init__(self, connection):
+        self.connection = connection
         self._util = ProductUtil
 
     def get_product(self, product_id):
         query = f"select * from products where id={product_id};"
-        self._cursor.execute(query)
-        products = self._util.get_product_details_from_cursor(self._cursor)
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        products = self._util.get_product_details_from_cursor(cursor)
         if products:
             return products[0]
 
